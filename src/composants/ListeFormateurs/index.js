@@ -1,4 +1,7 @@
-import { Icon } from '@iconify/react';
+
+import './index.css';
+import Formateur from '../Formateur';
+import { useState, useEffect} from 'react';
 
 const tabFormateurs = [
     {
@@ -22,19 +25,38 @@ const tabFormateurs = [
     }
 ]
 function ListeFormateurs() {
+    const [formateur, setFormateur] = useState("");
+    const [ count, setCount]= useState(0);
+    const [logoMatiere, setLogoMatiere] = useState("");
+
+    useEffect(() => {
+        document.title = "clicks : " + count;
+    },[count])
+
     return (
         <div>
-            <ul>
+            <h1>Vous avez cliqué {count} fois sur un formateur</h1>
+            <ul className="listeFormateurs" onClick={ () => setCount(count+1)}>
                 {
                     tabFormateurs.map((formateur, index) => {
-                        return (<li key={index.toString()}>{formateur.nom} 
-                        {/* { formateur.icone ? <Icon icon={formateur.icone} />: null } */}
-                        {/* ou */}
-                        { formateur.icone && <Icon icon={formateur.icone} /> }
-                        </li>)
+                        return (
+                            <Formateur key={index.toString()} nom={formateur.nom} icone={formateur.icone} />
+                        )
                     })
                 }
             </ul>
+            <form>
+                <label for="formateur">Formateur</label>
+                <input type="text" value={formateur} 
+                onChange={(e) => setFormateur(e.target.value)}/>
+                <br/>
+                <label for="formateur">Logo Matière</label>
+                <input type="text" value={logoMatiere} 
+                onChange={(e) => setLogoMatiere(e.target.value)}/>
+                <br/>
+                <input type="submit" value="Créer" />
+                <br/>
+            </form>
         </div>
     )
 }
