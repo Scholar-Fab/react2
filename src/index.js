@@ -8,11 +8,14 @@ import { BrowserRouter, Routes, Route, Link }  from 'react-router-dom';
 import Home from './composants/Home';
 import About from './composants/About';
 import InfosFormateurs from './composants/InfosFormateurs';
+import DetailFormateur from './composants/DetailFormateur';
+import { FormateursContexteProvider } from './contexte/FormateursContexte';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+  <FormateursContexteProvider>  
     <BrowserRouter>
     <nav style={{ margin: 10}}>
       <Link to="/" style={{ padding: 5}}>Accueil</Link>
@@ -23,10 +26,12 @@ root.render(
         <Route path="/" element={<Home /> } />
         <Route path="/formateurs" element={<InfosFormateurs />}>
           <Route path="" element={<ListeFormateurs />} />
+          <Route path=":slug" element={<DetailFormateur />} />
         </Route>
         <Route path="/about" element={<About />} />
       </Routes>
     </BrowserRouter>
+    </FormateursContexteProvider>
   </React.StrictMode>
 );
 

@@ -1,15 +1,17 @@
 
 import './index.css';
 import Formateur from '../Formateur';
-import { useState, useEffect} from 'react';
-import dataFormateurs from '../../data/dataFormateurs.js';
-
+import { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
+import slugify from '@sindresorhus/slugify';
+import { FormateursContexte } from '../../contexte/FormateursContexte.js';
+import { tab } from '@testing-library/user-event/dist/tab.js';
 
 function ListeFormateurs() {
     const [formateur, setFormateur] = useState("");
     const [ count, setCount]= useState(0);
     const [logoMatiere, setLogoMatiere] = useState("");
-    const [tabFormateurs, setTabFormateurs] = useState(dataFormateurs);
+    const {tabFormateurs, setTabFormateurs} = useContext(FormateursContexte);
 
     useEffect(() => {
         document.title = "clicks : " + count;
@@ -19,7 +21,13 @@ function ListeFormateurs() {
         e.preventDefault();
         console.log(formateur);
         console.log(logoMatiere);
-        setTabFormateurs([...tabFormateurs, {nom: formateur, icone: logoMatiere}]);
+        setTabFormateurs([...tabFormateurs, 
+            {
+                slug: slugify(formateur),
+                nom: formateur,
+                icone: logoMatiere
+            }
+        ]);
         setFormateur("");
         setLogoMatiere("");
     }
@@ -31,7 +39,9 @@ function ListeFormateurs() {
                 {
                     tabFormateurs.map((formateur, index) => {
                         return (
-                            <Formateur key={index.toString()} nom={formateur.nom} icone={formateur.icone} />
+                            <Link to={"/formateurs/" + formateur.slug} >   
+                                <Formateur key={index.toString()} nom={formateur.nom} icone={formateur.icone} />
+                            </Link>
                         )
                     })
                 }

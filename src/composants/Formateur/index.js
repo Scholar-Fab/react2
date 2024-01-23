@@ -11,7 +11,7 @@ function Formateur({nom, icone}){
         else{
             span.classList.add("rouge");
         }
-        alert(`Vous avez cliqué sur ${nom}`);
+        //alert(`Vous avez cliqué sur ${nom}`);
     }
     return(
         <li className="formateur"  >
