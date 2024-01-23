@@ -4,11 +4,29 @@ import './index.css';
 import App from './composants/App';
 import ListeFormateurs from './composants/ListeFormateurs';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, Routes, Route, Link }  from 'react-router-dom';
+import Home from './composants/Home';
+import About from './composants/About';
+import InfosFormateurs from './composants/InfosFormateurs';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ListeFormateurs />
+    <BrowserRouter>
+    <nav style={{ margin: 10}}>
+      <Link to="/" style={{ padding: 5}}>Accueil</Link>
+      <Link to="/formateurs" style={{ padding: 5}}>Formateurs</Link>
+      <Link to="/about" style={{ padding: 5}}>A propos</Link>
+    </nav>
+      <Routes>
+        <Route path="/" element={<Home /> } />
+        <Route path="/formateurs" element={<InfosFormateurs />}>
+          <Route path="" element={<ListeFormateurs />} />
+        </Route>
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

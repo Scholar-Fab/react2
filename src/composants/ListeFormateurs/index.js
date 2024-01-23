@@ -2,36 +2,27 @@
 import './index.css';
 import Formateur from '../Formateur';
 import { useState, useEffect} from 'react';
+import dataFormateurs from '../../data/dataFormateurs.js';
 
-const tabFormateurs = [
-    {
-        nom: "Guillaume Thiery",
-        icone: "fa-brands:symfony"
-    },
-    {
-        nom: "Olivier Ferry",
-        icone: "fa-brands:html5"
-    },
-    {
-        nom: "Damien Cherault",
-        icone: "fa-brands:php"
-    },
-    {
-        nom: "Flora Fiszlewicz",
-        icone: "fa-brands:wordpress"
-    },
-    {
-        nom: "Sandrine Lebaron"
-    }
-]
+
 function ListeFormateurs() {
     const [formateur, setFormateur] = useState("");
     const [ count, setCount]= useState(0);
     const [logoMatiere, setLogoMatiere] = useState("");
+    const [tabFormateurs, setTabFormateurs] = useState(dataFormateurs);
 
     useEffect(() => {
         document.title = "clicks : " + count;
     },[count])
+
+    function handleSubmit(e){
+        e.preventDefault();
+        console.log(formateur);
+        console.log(logoMatiere);
+        setTabFormateurs([...tabFormateurs, {nom: formateur, icone: logoMatiere}]);
+        setFormateur("");
+        setLogoMatiere("");
+    }
 
     return (
         <div>
@@ -45,12 +36,12 @@ function ListeFormateurs() {
                     })
                 }
             </ul>
-            <form>
-                <label for="formateur">Formateur</label>
+            <form onSubmit={(e) => handleSubmit(e)}>
+                <label htmlFor="formateur">Formateur</label>
                 <input type="text" value={formateur} 
                 onChange={(e) => setFormateur(e.target.value)}/>
                 <br/>
-                <label for="formateur">Logo Matière</label>
+                <label htmlFor="formateur">Logo Matière</label>
                 <input type="text" value={logoMatiere} 
                 onChange={(e) => setLogoMatiere(e.target.value)}/>
                 <br/>
